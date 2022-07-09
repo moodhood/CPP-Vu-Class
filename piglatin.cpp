@@ -1,5 +1,4 @@
-//Benjamin van Rhee PigLatin vertaalprogramma
-
+//Benjamin van Rhee PigLatin Translate Program
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -9,19 +8,18 @@
 std::string piglatin_woord( std::string woord);
 
 int main(){
-    //Hier vraagt hij het woord of de zin op.
-    std::string antwoord;
-    //[] = {"hallo", "Benjamin", "eerste", "alien"};
-    
-    //std::cout << "Geef mij een zin of een woord alsjeblieft:" << std::endl;
+    //Ask a Sentence 
+    std::string woordofzin;
+    std::cout << "Geef mij een zin of een woord alsjeblieft:" << std::endl;
 
 
-    std::getline(std::cin, antwoord);
-    std::istringstream iss(antwoord);
+    std::getline(std::cin, woordofzin);
+    std::istringstream iss(woordofzin);
 
     std::string piglatinzin;
+    std::string woord;
 
-    //Hier zet de code woord voor woord de zin om in pig latin en voegt het samen tot een zin.
+    //Here the piglatin sentence is created word for word 
     while (iss >> woord)
     {
         piglatin_woord(woord.c_str());
@@ -33,7 +31,7 @@ int main(){
     return 0;
 }
 
-//Dit checkt voor als de input een medeklinker is of niet. 
+//Here it checks if one of the words in the centence is a vowel
 bool isMedeklinker(char input){
 
     char medeklinker[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r','s', 't', 'y', 'v', 'w', 'x', 'z', '\0'};
@@ -46,7 +44,7 @@ bool isMedeklinker(char input){
     return false;
 }
 
-//Dit checkt voor als de input een klinker is of niet 
+//Here it checks if one of the words in the centence is a constant
 bool isKlinker(char input){
     
     char klinker[] = {'a', 'e', 'i', 'o', 'u', '\0'};
@@ -60,16 +58,16 @@ bool isKlinker(char input){
 
 }
 
-//Hier maak ik een functie die de woorden om zet in piglatin
+//Here it turns the word into a Piglatin word
 std::string piglatin_woord( std::string woord){
 
     std::string leesteken;
     char klinker[] = {'a', 'e', 'i', 'o', 'u'};
 
-    //Hier kijkt het als het woord een medeklinker is op het karakter 0.
+    //Here it looks at the first character if it is a vowel 
     if(isMedeklinker(woord[0])){
         
-        //Hier kijkt het hoeveel medeklinkers tot de eerste klinker er zijn.
+        //Here it looks at the first constant
         std::string eersteMedeklinkers;
         while(isMedeklinker(woord[0]))
         {
@@ -77,38 +75,41 @@ std::string piglatin_woord( std::string woord){
             woord.erase(0,1);
         }
         
-        //Dit kijkt als het eerste karakter een hoofdletter is, indien maakt het vervolgens het nieuwe eerste karakter een hoofdletter.
+        //This checks if the first character is capitalized, then capitalizes the new first character
         if (isupper(eersteMedeklinkers[0])){
             eersteMedeklinkers[0] = tolower(eersteMedeklinkers[0]);
             woord[0] = toupper(woord[0]);
         }
         
-        //Hier kijkt het naar de leestekens, eerst verwijderd het alle lees tekens daarna bewaard hij het in een variabele. 
+        //Here it looks at the punctuation marks, first it removes all punctuation marks then it stores it in a variable.
         while(ispunct(woord[woord.length()-1])){ 
             leesteken = woord[woord.length()-1] + leesteken;
             woord.resize(woord.length()-1);
         }
 
-        //Hier wordt de output gegeven om uitgeprint te worden in de main.
+        //Here the output is given to be printed in the main
         std::string output = woord + eersteMedeklinkers + "ay" + leesteken; 
         return output;
     }
-    //Hier kijkt het als het eerste karakter een klinker.
+    //Here it looks like the first character is a vowel
     else if(isKlinker(woord[0])){
 
-        //Hier kijkt het naar de leestekens, eerst verwijderd het alle lees tekens daarna bewaard hij het in een variabele. 
+        //Here it looks at the punctuation marks, first it removes all punctuation marks then it stores it in a variable 
         while(ispunct(woord[woord.length()-1])){ 
             leesteken = woord[woord.length()-1] + leesteken;
             woord.resize(woord.length()-1);
         }
 
-        //Hier wordt de output gegeven om uitgeprint te worden.
+        //Here the output is given to be printed
         std::string output = woord + "way" + leesteken;
         return output;
     }
     
     return woord;
 }
+
+
+
 
 
 
